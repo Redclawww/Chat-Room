@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 interface Message {
   id: number;
@@ -19,7 +19,7 @@ export const Chat = ({
 }) => {
   const [currentMessage, setCurentMessage] = useState("");
   const [messageList, setMessageList] = useState<Message[]>([]);
-  console.log(currentMessage);
+  const lastMessageRef = useRef<HTMLDivElement>(null);
 
   const sendMessage = async () => {
     if (currentMessage !== "") {
@@ -50,31 +50,74 @@ export const Chat = ({
     };
   }, [socket]);
 
-
+  useEffect(() => {
+    if (lastMessageRef.current) {
+      lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messageList]);
 
   return (
     <div>
-      <div className="flex h-[50vh] antialiased text-gray-800">
+      <div
+        className="flex h-full sm:h-[60vh] md:h-[60vh] lg:h-[60vh] w-[100vw] sm:w-[70vw]
+       lg:w-[30vw] antialiased text-gray-800 "
+      >
         <div className="flex flex-row h-full w-full overflow-x-hidden">
           <div className="flex flex-col flex-auto h-full p-6">
             <div className="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full p-4">
               <div className="flex flex-col h-full overflow-x-auto mb-4">
                 <div className="flex flex-col h-full">
+                  <div className="border-b">
+                    <h1 className="text-center text-xl">Chat Room</h1>
+                  </div>
                   <div className="grid grid-cols-12 gap-y-2">
-                    <div className="col-start-1 col-end-8 p-3 rounded-lg"></div>
+                    <div className="col-start-1 col-end-13 rounded-lg pt-3">
+                      <div className="col-start-1 col-end-8 p-3 rounded-lg flex items-start justify-start">
+                        <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
+                          A
+                        </div>
+                        <div
+                          className="
+                          flex flex-col items-end"
+                        >
+                          <div className="relative  text-sm bg-indigo-100 py-2 px-4 mx-2 shadow rounded-xl flex flex-row items-end">
+                            <div className="text-[1rem]">
+                              Welcome to the Chat room 👋
+                            </div>
+                          </div>
+                          <div>
+                            <p className="px-3">{}</p>
+                          </div>
+                        </div>
+
+                        <p className="pt-2">{}</p>
+                      </div>
+                    </div>
                     {messageList.map((data) => (
-                      <div
-                        className="col-start-1 col-end-13 p-3 rounded-lg "
-                      >
-                        <div className={`${data.author == username ? "col-start-6 col-end-13 p-3 rounded-lg flex items-center justify-start flex-row-reverse": "col-start-1 col-end-8 p-3 rounded-lg flex items-center justify-start"}`}>
+                      <div className="col-start-1 col-end-13  rounded-lg ">
+                        <div
+                          className={`${
+                            data.author == username
+                              ? "col-start-6 col-end-13 p-3 rounded-lg flex items-start justify-start flex-row-reverse"
+                              : "col-start-1 col-end-8 p-3 rounded-lg flex items-start justify-start"
+                          }`}
+                        >
                           <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
-                            A
+                            {data.author.charAt(0).toUpperCase()}
                           </div>
-                          <div className="relative mr-3 ml-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl max-w-[50%]">
-                            <div>{data.message}</div>
+                          <div
+                            className="
+                          flex flex-col items-end"
+                          >
+                            <div className="relative  text-sm bg-indigo-100 py-2 px-4 mx-2 shadow rounded-xl flex flex-row items-end">
+                              <div className="text-[1rem]">{data.message}</div>
+                            </div>
+                            <div>
+                              <p className="px-3">{data.author}</p>
+                            </div>
                           </div>
-                          <p>{data.author}</p>
-                          <p className="">{data.time}</p>
+
+                          <p className="pt-2">{data.time}</p>
                         </div>
                       </div>
                     ))}
@@ -90,11 +133,8 @@ export const Chat = ({
                       className="flex w-full border rounded-3xl focus:outline-none focus:border-indigo-300 pl-4 h-10"
                       value={currentMessage}
                       onChange={(e) => setCurentMessage(e.target.value)}
-                      onKeyPress={(e) => {
-                        e.key === "Enter" && sendMessage;
-                      }}
                     />
-                    <button className="absolute flex items-center justify-center h-full w-12 right-0 top-0 text-gray-400 hover:text-gray-600">
+                    {/* <button className="absolute flex items-center justify-center h-full w-12 right-0 top-0 text-gray-400 hover:text-gray-600">
                       <svg
                         className="w-6 h-6"
                         fill="none"
@@ -103,18 +143,18 @@ export const Chat = ({
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
                           d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                         ></path>
                       </svg>
-                    </button>
+                    </button> */}
                   </div>
                 </div>
                 <div className="ml-4">
                   <button
-                    className="flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 rounded-xl text-white px-4 py-1 flex-shrink-0"
+                    className="flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 rounded-3xl text-white px-4 py-2 flex-shrink-0"
                     onClick={sendMessage}
                   >
                     <span>Send</span>
@@ -127,9 +167,9 @@ export const Chat = ({
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
                           d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
                         ></path>
                       </svg>
