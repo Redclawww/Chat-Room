@@ -57,7 +57,7 @@ export const Chat = ({
   return (
     <div>
       <div
-        className="flex sm:h-[60vh] md:h-[60vh] lg:h-[60vh] w-[100vw] sm:w-[70vw]
+        className="flex sm:h-[60vh] h-[100vh] md:h-[60vh] lg:h-[60vh] w-[100vw] sm:w-[70vw]
        lg:w-[30vw] antialiased text-gray-800 front"
       >
         <div className="flex flex-row h-full w-full overflow-x-hidden">
@@ -86,7 +86,7 @@ export const Chat = ({
                             </div>
                           </div>
                           <div>
-                            <p className="px-3">{}</p>
+                            <p className="px-3">admin</p>
                           </div>
                         </div>
 
@@ -116,7 +116,6 @@ export const Chat = ({
                               <p className="px-3 text-[13px]">{data.author}</p>
                             </div>
                           </div>
-
                           <p className="pt-2">{data.time}</p>
                         </div>
                       </div>

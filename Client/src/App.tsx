@@ -25,7 +25,7 @@ function App() {
           autoPlay
           muted
           loop
-          className="absolute w-[100vw]"
+          className="absolute w-full h-full object-cover -z-0"
         ></video>
         {showChat == false ? (
           <form className="flex flex-col justify-center items-center p-10 gap-10 front">
