@@ -7,15 +7,18 @@ dotenv.config();
 const port = process.env.PORT || 1000;
 
 const app = express();
+app.use(cors());
+
 const server = http.createServer(app);
+
 const io = new Server(server,{
     cors:{
-        origin: "https://chatroomclient.vercel.app",
+        origin: "https://chatroomclient.vercel.app/",
         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-        credentials: true,
-        optionsSuccessStatus: 204,
     }
 });
+
+
 
 io.on("connection",(socket)=>{
     console.log("A user connected");
@@ -42,7 +45,7 @@ app.get("/",(req,res)=>{
     res.json("The Backend is working")
 })
 
-app.use(cors());
+
 
 server.listen(port,()=>{
     console.log("Server is running on port on 1000");
