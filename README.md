@@ -38,11 +38,11 @@ A simple chat app build with react and socket.io where multiple user can chat wi
    ```
 
 3. **Set Up Environment Variables:**
-   - Create a `.env` file in the `Client` directory and add the following:
+   - Open the `.env` file in the `Client` directory and change the following:
      ```
-     VITE_URI=http://localhost:100
+     VITE_URI=http://localhost:1000
      ```
-   - Create a `.env` file in the `Server` directory and add the following:
+   - Open the `.env` file in the `Server` directory and change the following:
      ```
      URI=http://localhost:5173
      ```
