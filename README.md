@@ -40,7 +40,11 @@ A simple chat app build with react and socket.io where multiple user can chat wi
 3. **Set Up Environment Variables:**
    - Create a `.env` file in the `Client` directory and add the following:
      ```
-     VITE_URI=chat-room-peach.vercel.app
+     VITE_URI=http://localhost:100
+     ```
+   - Create a `.env` file in the `Server` directory and add the following:
+     ```
+     URI=http://localhost:5173
      ```
 
 4. **Run the Application:**
