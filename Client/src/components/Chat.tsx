@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
+import { Socket } from "socket.io-client";
 
 interface Message {
   id: number;
@@ -13,13 +14,14 @@ export const Chat = ({
   username,
   room,
 }: {
-  socket: any;
+  socket: Socket;
   username: string;
   room: string;
 }) => {
   const [currentMessage, setCurentMessage] = useState("");
   const [messageList, setMessageList] = useState<Message[]>([]);
-  const lastMessageRef = useRef<HTMLDivElement>(null);
+  const isMounted = useRef(false);
+
 
   const sendMessage = async () => {
     if (currentMessage !== "") {
@@ -40,35 +42,36 @@ export const Chat = ({
   };
 
   useEffect(() => {
+    isMounted.current = true;
     const handleReceiveMsg = (data: Message) => {
-      setMessageList((list) => [...list, data]);
+
+      if (!messageList.find((msg) => msg.id === data.id)) {
+        setMessageList([...messageList, data]);
+      }
     };
     socket.on("recieve message", handleReceiveMsg);
 
     return () => {
       socket.off("receive message", handleReceiveMsg);
     };
-  }, [socket]);
+  }, [socket,messageList]);
 
-  useEffect(() => {
-    if (lastMessageRef.current) {
-      lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [messageList]);
+
+
 
   return (
     <div>
       <div
-        className="flex h-full sm:h-[60vh] md:h-[60vh] lg:h-[60vh] w-[100vw] sm:w-[70vw]
-       lg:w-[30vw] antialiased text-gray-800 "
+        className="flex sm:h-[60vh] md:h-[60vh] lg:h-[60vh] w-[100vw] sm:w-[70vw]
+       lg:w-[30vw] antialiased text-gray-800 front"
       >
         <div className="flex flex-row h-full w-full overflow-x-hidden">
           <div className="flex flex-col flex-auto h-full p-6">
-            <div className="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full p-4">
+            <div className="flex flex-col flex-auto flex-shrink-0 rounded-2xl  h-full p-4">
               <div className="flex flex-col h-full overflow-x-auto mb-4">
-                <div className="flex flex-col h-full">
+                <div className="flex flex-col h-full ">
                   <div className="border-b">
-                    <h1 className="text-center text-xl">Chat Room</h1>
+                    <h1 className="text-center text-2xl text-white font-sans font-semibold">Chat Room</h1>
                   </div>
                   <div className="grid grid-cols-12 gap-y-2">
                     <div className="col-start-1 col-end-13 rounded-lg pt-3">
@@ -113,7 +116,7 @@ export const Chat = ({
                               <div className="text-[1rem]">{data.message}</div>
                             </div>
                             <div>
-                              <p className="px-3">{data.author}</p>
+                              <p className="px-3 text-[13px]">{data.author}</p>
                             </div>
                           </div>
 

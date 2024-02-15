@@ -1,5 +1,4 @@
 import io from "socket.io-client";
-
 const socket = io("http://localhost:1000");
 import "./App.css";
 import { useState } from "react";
@@ -18,14 +17,12 @@ function App() {
     }
   };
 
+  
+
   return (
     <>
       <div className="flex justify-center items-center h-screen ">
-        <div className="wrapper">
-          <div className="gradient gradient-1"></div>
-          <div className="gradient gradient-2"></div>
-          <div className="gradient gradient-3"></div>
-        </div>
+        <video src="/bg.mp4" autoPlay muted loop className="absolute w-100vw"></video>
         {showChat == false ? (
           <form className="flex flex-col justify-center items-center p-10 gap-10 front">
             <h1 className="text-3xl">Join Chat Room</h1>
