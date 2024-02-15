@@ -17,12 +17,16 @@ function App() {
     }
   };
 
-  
-
   return (
     <>
       <div className="flex justify-center items-center h-screen ">
-        <video src="/bg.mp4" autoPlay muted loop className="absolute w-100vw"></video>
+        <video
+          src="/bg.mp4"
+          autoPlay
+          muted
+          loop
+          className="absolute w-[100vw]"
+        ></video>
         {showChat == false ? (
           <form className="flex flex-col justify-center items-center p-10 gap-10 front">
             <h1 className="text-3xl">Join Chat Room</h1>

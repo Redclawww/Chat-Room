@@ -22,7 +22,6 @@ export const Chat = ({
   const [messageList, setMessageList] = useState<Message[]>([]);
   const isMounted = useRef(false);
 
-
   const sendMessage = async () => {
     if (currentMessage !== "") {
       const messageData = {
@@ -44,7 +43,6 @@ export const Chat = ({
   useEffect(() => {
     isMounted.current = true;
     const handleReceiveMsg = (data: Message) => {
-
       if (!messageList.find((msg) => msg.id === data.id)) {
         setMessageList([...messageList, data]);
       }
@@ -54,10 +52,7 @@ export const Chat = ({
     return () => {
       socket.off("receive message", handleReceiveMsg);
     };
-  }, [socket,messageList]);
-
-
-
+  }, [socket, messageList]);
 
   return (
     <div>
@@ -71,7 +66,9 @@ export const Chat = ({
               <div className="flex flex-col h-full overflow-x-auto mb-4">
                 <div className="flex flex-col h-full ">
                   <div className="border-b">
-                    <h1 className="text-center text-2xl text-white font-sans font-semibold">Chat Room</h1>
+                    <h1 className="text-center text-2xl text-white font-sans font-semibold">
+                      Chat Room
+                    </h1>
                   </div>
                   <div className="grid grid-cols-12 gap-y-2">
                     <div className="col-start-1 col-end-13 rounded-lg pt-3">
@@ -96,8 +93,8 @@ export const Chat = ({
                         <p className="pt-2">{}</p>
                       </div>
                     </div>
-                    {messageList.map((data) => (
-                      <div className="col-start-1 col-end-13  rounded-lg ">
+                    {messageList.map((data,index) => (
+                      <div className="col-start-1 col-end-13 rounded-lg " id={`${index}`}>
                         <div
                           className={`${
                             data.author == username
