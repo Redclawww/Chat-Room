@@ -1,5 +1,5 @@
 import io from "socket.io-client";
-const socket = io("wss://chat-room-peach.vercel.app");
+const socket = io("ws://chat-room-peach.vercel.app");
 
 import "./App.css";
 import { useState } from "react";
