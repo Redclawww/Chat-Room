@@ -33,7 +33,9 @@ io.on("connection",(socket)=>{
 
 
 
-
+app.get("/",(req,res)=>{
+    res.json("The Backend is working")
+})
 
 app.use(cors());
 
