@@ -1,5 +1,6 @@
 import io from "socket.io-client";
-const socket = io("http://localhost:1000");
+const socket = io(import.meta.env.VITE_URI);
+
 import "./App.css";
 import { useState } from "react";
 import { Chat } from "./components/Chat";
