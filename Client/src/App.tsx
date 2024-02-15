@@ -1,5 +1,5 @@
 import io from "socket.io-client";
-const socket = io("https://chat-room-peach.vercel.app",{
+const socket = io(import.meta.env.VITE_URI,{
   transports: ['websocket']
 });
 
