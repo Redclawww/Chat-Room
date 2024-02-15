@@ -13,7 +13,7 @@ const server = http.createServer(app);
 
 const io = new Server(server,{
     cors:{
-        origin: "*", // to make it deployable otherwise client side URI will be used
+        origin: "https://chatroomclient.vercel.app/",
         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     }
 });
