@@ -1,5 +1,7 @@
 import io from "socket.io-client";
-const socket = io("ws://chat-room-peach.vercel.app");
+const socket = io("https://chat-room-peach.vercel.app",{
+  transports: ['websocket']
+});
 
 import "./App.css";
 import { useState } from "react";
